@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e9166b83b580324db897f8f35e72c99, type: 3}
+  m_Name: M4A1
+  m_EditorClassIdentifier: Assembly-CSharp::Gun/GunSO
+  type: 2000
+  shootingMode: 0
+  gunCost: 2000
+  ammoCost: 500
+  damage: 30
+  maxMagSize: 25
+  maxStorageSize: 125
+  fireRate: 8
+  shootSound: {fileID: 8300000, guid: e193c448c5cf0534ab3762378048073b, type: 3}
+  reloadSound: {fileID: 8300000, guid: d1efcd3c5ea05bc48b086e567ffa8526, type: 3}

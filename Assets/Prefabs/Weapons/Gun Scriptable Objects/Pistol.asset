@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e9166b83b580324db897f8f35e72c99, type: 3}
+  m_Name: Pistol
+  m_EditorClassIdentifier: Assembly-CSharp::Gun/GunSO
+  type: 0
+  shootingMode: 1
+  gunCost: 0
+  ammoCost: 200
+  damage: 20
+  maxMagSize: 10
+  maxStorageSize: 40
+  fireRate: 1
+  shootSound: {fileID: 8300000, guid: d303c5050c105ca4ab01e24420763161, type: 3}
+  reloadSound: {fileID: 8300000, guid: d1efcd3c5ea05bc48b086e567ffa8526, type: 3}
