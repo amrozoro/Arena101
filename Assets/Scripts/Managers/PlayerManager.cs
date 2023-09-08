@@ -60,8 +60,7 @@ public class PlayerManager : MonoBehaviour
         set 
         {
             _currentPoints = value;
-            Instance.currentPointsTxt.text = $"Points: {value}";
-            Instance.buyMenuPointsTxt.text = value.ToString();
+            Instance.currentPointsTxt.text = Instance.buyMenuPointsTxt.text = $"Points: {value}";
         }
     }
 
