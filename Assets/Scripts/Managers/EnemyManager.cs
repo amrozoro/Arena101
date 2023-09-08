@@ -42,7 +42,7 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
-    void Die()
+    public void Die()
     {
         if(Random.Range(1, 101) <= powerupPercentage)
         {

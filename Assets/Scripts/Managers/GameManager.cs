@@ -58,6 +58,8 @@ public class GameManager : MonoBehaviour
     public bool roundPlaying = true;
     public int prepPhaseDuration = 5;
     int prepPhaseTimeLeft = 10;
+    
+    public GameObject enemiesHolder;
 
     private void Awake()
     {
@@ -314,7 +316,7 @@ public class GameManager : MonoBehaviour
             }
 
 
-            GameObject enemy = Instantiate(enemyPrefab, GameObject.Find("Enemies").transform);
+            GameObject enemy = Instantiate(enemyPrefab, enemiesHolder.transform);
             enemy.transform.position = new Vector3(x, enemy.transform.position.y, z);
         }
 

@@ -41,7 +41,23 @@ public class TextBoxScript : MonoBehaviour
                 //this message was indeed a command since '/' was the first character
                 string[] splitCommand = message.Substring(1).Split(' ');
 
-                if (splitCommand.Length == 3)
+                if (splitCommand.Length == 2)
+                {
+                    if (splitCommand[0] == "kill")
+                    {
+                        switch (splitCommand[1])
+                        {
+                            case "enemies":
+                                foreach (Transform enemy in GameManager.Instance.enemiesHolder.transform)
+                                {
+                                    enemy.GetComponent<EnemyManager>().Die();
+                                }
+
+                                break;
+                        }
+                    }
+                }
+                else if (splitCommand.Length == 3)
                 {
                     if (splitCommand[0] == "give")
                     {
