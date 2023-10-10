@@ -6,12 +6,28 @@ using UnityEngine.UI;
 public class TextBoxScript : MonoBehaviour
 {
     private static TextBoxScript Instance;
+    public static bool inputFieldActive = false;
     [SerializeField] private InputField inputField;
+
+    private static List<string> commandHistory = new List<string>();
+
+    private static int commandHistoryIndex = -1;
+    private static int CommandHistoryIndex
+    {
+        get { return commandHistoryIndex; }
+        set
+        {
+            if (value >= 0 && value < commandHistory.Count)
+            {
+                commandHistoryIndex = value;
+            }
+        }
+    }
 
     private void Start()
     {
         Instance = this;
-        Instance.inputField.onEndEdit.AddListener(ProcessMessage);
+        inputField.onEndEdit.AddListener(ProcessMessage);
     }
 
     private void Update()
@@ -19,6 +35,7 @@ public class TextBoxScript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.T))
         {
             Instance.inputField.ActivateInputField();
+            inputFieldActive = true;
             PlayerManager.movementAllowed = false;
             PlayerManager.lookingAroundAllowed = false;
             PlayerManager.shootingAllowed = false;
@@ -27,6 +44,22 @@ public class TextBoxScript : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Escape))
         {
             Instance.inputField.DeactivateInputField();
+            CommandHistoryIndex = commandHistory.Count - 1;
+        }
+        else if (inputFieldActive && commandHistory.Count > 0)
+        {
+            //cycling through command history
+
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                inputField.text = commandHistory[CommandHistoryIndex];
+                CommandHistoryIndex--;
+            }
+            else if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                CommandHistoryIndex++;
+                inputField.text = commandHistory[CommandHistoryIndex];
+            }
         }
     }
 
@@ -111,5 +144,10 @@ public class TextBoxScript : MonoBehaviour
         PlayerManager.lookingAroundAllowed = true;
         PlayerManager.shootingAllowed = true;
         PlayerManager.reloadingAllowed = true;
+        inputFieldActive = false;
+
+        //add the command to the commandHistory
+        commandHistory.Add(message);
+        CommandHistoryIndex++;
     }
 }
