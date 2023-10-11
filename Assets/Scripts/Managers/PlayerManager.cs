@@ -82,6 +82,7 @@ public class PlayerManager : MonoBehaviour
     public static bool lookingAroundAllowed = true;
     public static bool shootingAllowed = true;
     public static bool reloadingAllowed = true;
+    public static bool switchingWeaponsAllowed = true;
 
     private void Awake()
     {

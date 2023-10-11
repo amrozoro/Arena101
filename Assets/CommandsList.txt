@@ -1,0 +1,7 @@
+/kill enemies
+
+/give cash {amount}
+
+/give weapon {weapon_name}
+
+/set round {round_number}

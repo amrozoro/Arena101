@@ -18,7 +18,7 @@ public class SwitchWeapons : MonoBehaviour
         secondaryGunTxt.text = $"2. {PlayerManager.secondaryGun?.gunSO.type}";
 
 
-        if (!PlayerManager.reloading)
+        if (!PlayerManager.reloading && PlayerManager.switchingWeaponsAllowed)
         {
             if (PlayerManager.primaryGun && Input.GetKeyDown(KeyCode.Alpha1))
             {

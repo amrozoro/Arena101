@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
             PlayerManager.movementAllowed = !value;
             PlayerManager.shootingAllowed = !value;
             PlayerManager.reloadingAllowed = !value;
+            PlayerManager.switchingWeaponsAllowed = !value;
         }
     }
 

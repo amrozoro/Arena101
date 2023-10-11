@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
 
 public class TextBoxScript : MonoBehaviour
 {
@@ -40,6 +42,7 @@ public class TextBoxScript : MonoBehaviour
             PlayerManager.lookingAroundAllowed = false;
             PlayerManager.shootingAllowed = false;
             PlayerManager.reloadingAllowed = false;
+            PlayerManager.switchingWeaponsAllowed = false;
         }
         else if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -65,6 +68,8 @@ public class TextBoxScript : MonoBehaviour
 
     public static void ProcessMessage(string message)
     {
+        message = message.Trim();
+
         if (message.Length > 0)
         {
             Instance.inputField.text = ""; //clearing the text box
@@ -74,7 +79,22 @@ public class TextBoxScript : MonoBehaviour
                 //this message was indeed a command since '/' was the first character
                 string[] splitCommand = message.Substring(1).Split(' ');
 
-                if (splitCommand.Length == 2)
+                if (splitCommand.Length == 1)
+                {
+                    if (splitCommand[0] == "help")
+                    {
+                        IEnumerable helpTxt = File.ReadLines(Directory.GetCurrentDirectory() + "/Assets/CommandsList.txt");
+
+                        foreach (string command in helpTxt)
+                        {
+                            if (!string.IsNullOrWhiteSpace(command))
+                            {
+                                print(command);
+                            }
+                        }
+                    }
+                }
+                else if (splitCommand.Length == 2)
                 {
                     if (splitCommand[0] == "kill")
                     {
@@ -104,18 +124,20 @@ public class TextBoxScript : MonoBehaviour
 
                                 break;
                             case "weapon":
-                                switch (splitCommand[2].ToLower())
+                                string value = splitCommand[2].ToUpper();
+
+                                switch (value)
                                 {
-                                    case "ak47":
+                                    case string s when nameof(Gun.GunType.AK47).ToUpper() == value:
                                         GameManager.Instance.SpawnGun(Gun.GunType.AK47);
                                         break;
-                                    case "m4a1":
+                                    case string s when nameof(Gun.GunType.M4A1).ToUpper() == value:
                                         GameManager.Instance.SpawnGun(Gun.GunType.M4A1);
                                         break;
-                                    case "shotgun":
+                                    case string s when nameof(Gun.GunType.Shotgun).ToUpper() == value:
                                         GameManager.Instance.SpawnGun(Gun.GunType.Shotgun);
                                         break;
-                                    case "pistol":
+                                    case string s when nameof(Gun.GunType.Pistol).ToUpper() == value:
                                         GameManager.Instance.SpawnGun(Gun.GunType.Pistol);
                                         break;
                                 }
