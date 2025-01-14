@@ -13,6 +13,7 @@ public class PlayerManager : MonoBehaviour
 
     static float normalSpeed = 15;
     static float sprintSpeed = normalSpeed * 1.5f;
+    static float superSpeed = normalSpeed * 3.0f;
     static float currentSpeed;
 
     float jumpForce = 40f;
@@ -118,7 +119,7 @@ public class PlayerManager : MonoBehaviour
 
                     RaycastHit hitInfo;
 
-                    if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo))
+                    if (Physics.Raycast(CameraController.currentActiveCam.ScreenPointToRay(Input.mousePosition), out hitInfo))
                     {
                         if (hitInfo.collider.CompareTag("Enemy"))
                         {
@@ -159,7 +160,7 @@ public class PlayerManager : MonoBehaviour
 
                     RaycastHit hitInfo;
 
-                    if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo))
+                    if (Physics.Raycast(CameraController.currentActiveCam.ScreenPointToRay(Input.mousePosition), out hitInfo))
                     {
                         if (hitInfo.collider.CompareTag("Enemy"))
                         {
@@ -226,8 +227,13 @@ public class PlayerManager : MonoBehaviour
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivityY * Time.deltaTime; // Gets input from the mouse on the vertical (y) axis. Returns 0 for no input, 1 for positive input, and -1 for negative input
 
         transform.Rotate(0, mouseX, 0); // Rotates player around y axis (left to right) depending on mouse input
-        
-        mainCamera.transform.Rotate(-mouseY, 0, 0); // Rotates Main Camera around x axis (up and down) depending on mouse 
+
+        Camera cam = CameraController.currentActiveCam;
+        cam.transform.Rotate(-mouseY, 0, 0); // Rotates Main Camera around x axis (up and down) depending on mouse 
+
+        //float xVal = Mathf.Clamp(cam.transform.eulerAngles.x, -90, 90);
+
+        //cam.transform.eulerAngles = new Vector3(xVal, 0, 0);
     }
 
     void Jump()
