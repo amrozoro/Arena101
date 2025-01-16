@@ -250,8 +250,17 @@ public class PlayerManager : MonoBehaviour
         isOnGround = false;
         jumpsLeft--;
         rigidbodyComponent.AddForce(0, jumpForce, 0, ForceMode.Impulse);
-        constantForceComponent.force = new Vector3(0, gravityInAir, 0);
+        EnableGravityInAir();
         jumpSound.Play();
+    }
+
+    public void EnableGravityOnGround()
+    {
+        constantForceComponent.force = new Vector3(0, gravityOnGround, 0);
+    }
+    public void EnableGravityInAir()
+    {
+        constantForceComponent.force = new Vector3(0, gravityInAir, 0);
     }
 
     public static void SetGunUI(Gun gun)
@@ -273,7 +282,7 @@ public class PlayerManager : MonoBehaviour
         else
         {
             isOnGround = true;
-            constantForceComponent.force = new Vector3(0, gravityOnGround, 0);
+            EnableGravityOnGround();
             jumpsLeft = jumpsAllowed;
         }
     }

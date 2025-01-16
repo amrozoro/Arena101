@@ -16,6 +16,8 @@ public class FlyScript : MonoBehaviour
             PlayerManager.Instance.rigidbodyComponent.useGravity = !value;
             PlayerManager.Instance.constantForceComponent.enabled = !value;
             PlayerManager.jumpingAllowed = !value;
+
+            if (!value) PlayerManager.Instance.EnableGravityInAir();
         }
     }
 
@@ -35,10 +37,10 @@ public class FlyScript : MonoBehaviour
     {
         get;
         private set;
-    } = KeyCode.LeftAlt;
+    } = KeyCode.LeftControl;
 
     public float ascendSpeed = 30f;
-    public float descendSpeed = Instance.ascendSpeed;
+    public float descendSpeed = 30f;
 
     void Start()
     {
