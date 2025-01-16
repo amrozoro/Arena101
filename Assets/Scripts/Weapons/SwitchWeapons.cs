@@ -18,42 +18,46 @@ public class SwitchWeapons : MonoBehaviour
         secondaryGunTxt.text = $"2. {PlayerManager.secondaryGun?.gunSO.type}";
 
 
-        if (!PlayerManager.reloading && PlayerManager.switchingWeaponsAllowed)
+        if (PlayerManager.switchingWeaponsAllowed && !PlayerManager.reloading)
         {
-            if (PlayerManager.primaryGun && Input.GetKeyDown(KeyCode.Alpha1))
+            if (Input.GetKeyDown(KeyCode.Alpha1))
             {
-                SwitchWeaponsFunction(PlayerManager.primaryGun);
+                SwitchWeaponsFunction(PlayerManager.GunSlot.Primary);
 
             }
-            else if (PlayerManager.secondaryGun && Input.GetKeyDown(KeyCode.Alpha2))
+            else if (Input.GetKeyDown(KeyCode.Alpha2))
             {
-                SwitchWeaponsFunction(PlayerManager.secondaryGun);
+                SwitchWeaponsFunction(PlayerManager.GunSlot.Secondary);
             }
         }
     }
 
-    public static void SwitchWeaponsFunction(Gun gun)
+    public static void SwitchWeaponsFunction(PlayerManager.GunSlot slot)
     {
-        if (gun.gunSO.type == Gun.GunType.Pistol)
+        PlayerManager.equippedGun?.gameObject.SetActive(false);
+
+        if (slot == PlayerManager.GunSlot.Primary)
         {
-            //PlayerManager.primaryGun?.gameObject.SetActive(false);
-            Instance.primaryGunTxt.fontSize = 25;
-            Instance.secondaryGunTxt.fontSize = 45;
-        }
-        else
-        {
-            //PlayerManager.Instance.secondaryGun?.gameObject.SetActive(false);
             Instance.primaryGunTxt.fontSize = 45;
             Instance.secondaryGunTxt.fontSize = 25;
+            PlayerManager.equippedGun = PlayerManager.primaryGun;
+            PlayerManager.equippedGunSlot = PlayerManager.GunSlot.Primary;
+        }
+        else if (slot == PlayerManager.GunSlot.Secondary)
+        {
+            Instance.primaryGunTxt.fontSize = 25;
+            Instance.secondaryGunTxt.fontSize = 45;
+            PlayerManager.equippedGun = PlayerManager.secondaryGun;
+            PlayerManager.equippedGunSlot = PlayerManager.GunSlot.Secondary;
         }
 
-        PlayerManager.equippedGun?.gameObject.SetActive(false);
-        PlayerManager.equippedGun = gun;
-        gun.gameObject.SetActive(true);
-        gun.readyToFire = true;
+        if (!PlayerManager.equippedGun) return;
 
-        PlayerManager.SetGunUI(gun);
+        PlayerManager.equippedGun.gameObject.SetActive(true);
+        PlayerManager.equippedGun.readyToFire = true;
 
-        PlayerManager.Instance.ammoBuyTxt.text = $"Refill {gun.gunSO.type} ammo for {gun.gunSO.ammoCost} points";
+        PlayerManager.SetGunUI(PlayerManager.equippedGun);
+
+        PlayerManager.Instance.ammoBuyTxt.text = $"Refill {PlayerManager.equippedGun.gunSO.type} ammo for {PlayerManager.equippedGun.gunSO.ammoCost} points";
     }
 }

@@ -214,18 +214,19 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (type == Gun.GunType.Pistol)
-        {
-            Destroy(PlayerManager.secondaryGun?.gameObject);
-            PlayerManager.secondaryGun = gunScript;
-        }
-        else
+        if (PlayerManager.equippedGunSlot == PlayerManager.GunSlot.Primary)
         {
             Destroy(PlayerManager.primaryGun?.gameObject);
             PlayerManager.primaryGun = gunScript;
+            SwitchWeapons.SwitchWeaponsFunction(PlayerManager.GunSlot.Primary);
+        }
+        else if (PlayerManager.equippedGunSlot == PlayerManager.GunSlot.Secondary)
+        {
+            Destroy(PlayerManager.secondaryGun?.gameObject);
+            PlayerManager.secondaryGun = gunScript;
+            SwitchWeapons.SwitchWeaponsFunction(PlayerManager.GunSlot.Secondary);
         }
 
-        SwitchWeapons.SwitchWeaponsFunction(gunScript);
     }
 
     public void BuyAK47()

@@ -8,13 +8,13 @@ public class Gun : MonoBehaviour
         Pistol = 0,
         Shotgun = 1000,
         M4A1 = 2000,
-        AK47 = 3000
+        AK47 = 3000,
     }
 
     public enum ShootingMode
     {
         Automatic,
-        Semi_Automatic,
+        SemiAutomatic,
     }
 
     public GunSO gunSO;

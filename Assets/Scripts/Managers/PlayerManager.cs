@@ -81,6 +81,15 @@ public class PlayerManager : MonoBehaviour
     public static Gun secondaryGun;
     public static Gun equippedGun;
 
+
+    public enum GunSlot
+    {
+        Primary,
+        Secondary
+    }
+
+    public static GunSlot equippedGunSlot = GunSlot.Primary;
+
     public static bool movementAllowed = true;
     public static bool jumpingAllowed = true;
     public static bool lookingAroundAllowed = true;
