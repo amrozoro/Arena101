@@ -8,13 +8,16 @@ public class PlayerManager : MonoBehaviour
     [Range(1, 100)] public float mouseSensitivityX = 70, mouseSensitivityY = 70;
     public GameObject mainCamera;
     public Text healthTxt, currentPointsTxt, sprintText, doublePointsText, instaKillText, doubleJumpText, buyMenuPointsTxt, ammoBuyTxt, magazineTxt, storageTxt;
+
+    public Rigidbody rigidbodyComponent;
     public ConstantForce constantForceComponent;
+    
     public AudioSource jumpSound, maxAmmoSound, doublePointsSound, instaKillSound, takeDamageSound;
 
-    static float normalSpeed = 15;
-    static float sprintSpeed = normalSpeed * 1.5f;
-    static float superSpeed = normalSpeed * 3.0f;
-    static float currentSpeed;
+    public static float normalSpeed { get; private set; } = 15;
+    public static float sprintSpeed { get; private set; } = normalSpeed * 1.5f;
+    public static float superSpeed { get; private set; } = normalSpeed * 3.0f;
+    public static float currentSpeed { get; private set; }
 
     float jumpForce = 40f;
     float gravityOnGround = -9.81f;
@@ -85,6 +88,12 @@ public class PlayerManager : MonoBehaviour
     public static bool reloadingAllowed = true;
     public static bool switchingWeaponsAllowed = true;
 
+    public static KeyCode jumpKey
+    {
+        get;
+        private set;
+    } = KeyCode.Space;
+
     private void Awake()
     {
         Instance = this;
@@ -97,7 +106,7 @@ public class PlayerManager : MonoBehaviour
         {
             Move();
 
-            if (jumpingAllowed && jumpsLeft > 0 && Input.GetKeyDown(KeyCode.Space))
+            if (jumpingAllowed && jumpsLeft > 0 && Input.GetKeyDown(jumpKey))
             {
                 Jump();
             }
@@ -240,7 +249,7 @@ public class PlayerManager : MonoBehaviour
     {
         isOnGround = false;
         jumpsLeft--;
-        gameObject.GetComponent<Rigidbody>().AddForce(0, jumpForce, 0, ForceMode.Impulse);
+        rigidbodyComponent.AddForce(0, jumpForce, 0, ForceMode.Impulse);
         constantForceComponent.force = new Vector3(0, gravityInAir, 0);
         jumpSound.Play();
     }
